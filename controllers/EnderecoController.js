@@ -1,4 +1,5 @@
 const { Endereco } = require('../models');
+const axios = require('axios')
 
 // criacao de um novo endereco
 exports.createEndereco = async (req, res) => {
@@ -20,6 +21,38 @@ exports.createEndereco = async (req, res) => {
         res.status(500).json({ error: 'Erro ao criar endereco', details: error.message });
     }
 };
+
+
+// método novo na controller que recebe o cep, consulta ele no via cep e cadastra o endereco no banco de dados
+exports.createEnderecoViaCep = async (req, res) => {
+    const cep = req.params.cep; // pega o cep da url e passa pra variavel cep
+
+    try{
+        try {
+            const response = axios.get(`https://viacep.com.br/ws/{cep}/json/`) //faz a requisicao para a api viacep
+            const info = res.json(response.data); // retorna os dados da resposta
+        } catch (error) {
+            console.error('Erro ao fazer requisicação: ', error)
+            res.status(500).send('Erro ao consultar cep');
+        }
+
+         const novoCep = await Endereco.create({ // criando novo endereço com os dados da resposta
+            Cep : info.cep,
+            Logradouro : info.logradouro,
+            Numero: info.complemento,
+            Complemento : info.complemento,
+            Bairro : info.bairro,               
+            Cidade : info.localidade,
+            Estado : info.uf,
+            MunicipioIBGE : Londrina
+            });
+        res.status(201).json(novoEndereco);
+    } catch(error) {
+        console.error('Erro ao salvar no banco de dados: ', error)
+        res.status(500).send('Erro ao salvar no banco');    
+    }
+}
+
 
 // leitura de todos os enderecos
 exports.getAllEnderecos = async (req, res) => {
