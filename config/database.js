@@ -5,7 +5,7 @@ module.exports = {
     dialect: 'postgres',
     host: 'localhost',
     username: 'postgres',
-    password: 'xxxxx', // quando testar inserir a senha certa, fazer o mesmo no arquivo config.json
+    password: 'xxxxxx', // quando testar inserir a senha certa, fazer o mesmo no arquivo config.json
     database: 'apiNode',
     define: {
         timestamps: true,
