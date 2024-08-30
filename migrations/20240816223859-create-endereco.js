@@ -20,7 +20,7 @@ module.exports = {
         allowNull: false,
       },
       Numero: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       Complemento: {

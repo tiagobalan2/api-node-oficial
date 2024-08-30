@@ -1,3 +1,4 @@
+const { escape } = require('sequelize/lib/sql-string');
 const { Endereco } = require('../models');
 const axios = require('axios')
 
