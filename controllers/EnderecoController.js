@@ -132,6 +132,8 @@ exports.deleteEndereco = async (req, res) => {
 
 
 
+// testando se reconectou
+
 
 
 
